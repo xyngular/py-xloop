@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xloop"
-version = "1.0.0"
+version = "1.0.1"
 description = "General purpose for/iterator looping generators/utilities."
 authors = ["Josh Orr <josh@orr.blue>"]
 packages = [{include = "xloop"}]

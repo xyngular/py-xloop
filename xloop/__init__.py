@@ -2,7 +2,7 @@ from typing import Union, Iterator, Iterable, TypeVar, Set, Type, Tuple
 
 T = TypeVar("T")
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 DEFAULT_NOT_ITERATE = (str, int, bytes)
 
