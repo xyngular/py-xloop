@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "xloop"
 version = "1.0.0"
-description = "Feneral purpose for/iterator looping generators/utilities."
+description = "General purpose for/iterator looping generators/utilities."
 authors = ["Josh Orr <josh@orr.blue>"]
 packages = [{include = "xloop"}]
 readme = "README.md"
@@ -35,9 +35,6 @@ testpaths = ["tests", "xloop"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.custom.xpublish]
-extra-module-docs = ['xsentinels']
 
 [tool.black]
 line-length = 99
