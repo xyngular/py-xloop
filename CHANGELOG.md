@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/xyngular/py-xloop/compare/v1.0.1...v1.0.2) (2023-04-15)
+
+
+### Bug Fixes
+
+* license ([4fbe3f7](https://github.com/xyngular/py-xloop/commit/4fbe3f7979c2200b58249d393125780c4dfc94b2))
+
 ## [1.0.1](https://github.com/xyngular/py-xloop/compare/v1.0.0...v1.0.1) (2022-12-26)
 
 
