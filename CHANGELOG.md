@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/xyngular/py-xloop/compare/v1.0.2...v1.1.0) (2024-01-03)
+
+
+### Features
+
+* don't iterate dicts or pydantic.BaseModel by default; add easy way to add not-iterable objects without replacing all the defaults. ([4014d37](https://github.com/xyngular/py-xloop/commit/4014d373137401e59aafbe4cf74f03bf5c45ce5e))
+
+
+### Bug Fixes
+
+* code-style. ([f801806](https://github.com/xyngular/py-xloop/commit/f801806e36f4e13eb77d8b1b23fd92c4b49632e8))
+
 ## [1.0.2](https://github.com/xyngular/py-xloop/compare/v1.0.1...v1.0.2) (2023-04-15)
 
 
