@@ -15,11 +15,9 @@ T = TypeVar("T")
 __version__ = '1.0.0'
 
 
-
-
 def xloop(
     *args: Union[Iterable[T], T],
-    not_iterate:  Iterable[Type] | None = None,
+    not_iterate: Iterable[Type] | None = None,
     default_not_iterate: Iterable[Type] | DefaultType = Default,
     yield_items_for_dicts=False
 ) -> Iterator[T]:
