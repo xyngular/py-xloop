@@ -1,15 +1,24 @@
 from typing import Union, Iterator, Iterable, TypeVar, Set, Type, Tuple
+from xsentinels.default import Default, DefaultType
+
+DEFAULT_NOT_ITERATE = (str, int, bytes, dict)
+
+try:
+    # If pydantic is available, add that to the default list.
+    from pydantic import BaseModel as PydanticModel
+    DEFAULT_NOT_ITERATE = (*DEFAULT_NOT_ITERATE, PydanticModel)
+except ImportError:
+    pass
 
 T = TypeVar("T")
 
 __version__ = '1.0.2'
 
-DEFAULT_NOT_ITERATE = (str, int, bytes)
-
 
 def xloop(
     *args: Union[Iterable[T], T],
-    not_iterate: Iterable[Type] = DEFAULT_NOT_ITERATE,
+    not_iterate: Iterable[Type] | None = None,
+    default_not_iterate: Iterable[Type] | DefaultType = Default,
     yield_items_for_dicts=False
 ) -> Iterator[T]:
     """
@@ -112,36 +121,46 @@ def xloop(
     Produces: `["next!"]`
 
     Args:
-        not_iterate: Set of types to directly yield and not iterate.
-            By default, this is `str`, `int`, and `bytes` (see `DEFAULT_NOT_ITERATE`)
+        not_iterate: Set of addtional types (added to the default set) to directly yield and not iterate.
+            This can be any iterable (ie: list/tuple/etc).
 
-        yield_items_for_dicts: If False (default): Iterate dict's normally, ie: only yeild their
-            keys.
+        default_not_iterate: Default types to not iterate (added with `not_iterate` above),
+            This is normally just `str`, `int`, `bytes` and `dict` (see `DEFAULT_NOT_ITERATE`).
+            Also, if `pydantic` is avaliable we also add pydantic.BaseModel to the DEFAULT_NOT_ITERATE.
 
-            If True: Will yeild items from dicts, which are their key/value pairs as a tuple.
+        yield_items_for_dicts: If True: Will yeild items from dicts, which are their key/value pairs as a tuple.
             The same as if you did this:
 
                 >>> some_dict = {'key1': 'value1', 'key2': 'value2'}
                 >>> for key, value in some_dict.items():
                 ...     ...
+
+                When True, `dict` will still be iterated by `.items()`, even if `dict` in the not iterated list.
     """
     # Reminder: 'anything' is all positional arguments passed into method.
     if not args:
         return
 
-    # Ensure we have a tuple
-    not_iterate = tuple(not_iterate)
+    if not_iterate is None and default_not_iterate is Default:
+        not_iterate = DEFAULT_NOT_ITERATE
+    else:
+        if default_not_iterate is Default:
+            default_not_iterate = DEFAULT_NOT_ITERATE
+
+        if not_iterate is None:
+            not_iterate = ()
+
+        not_iterate = (*default_not_iterate, *not_iterate)
 
     for arg in args:
         if arg is None:
             continue
 
-        if isinstance(arg, not_iterate):
-            yield arg
-            continue
-
         if yield_items_for_dicts and isinstance(arg, dict):
             arg = arg.items()
+        elif isinstance(arg, not_iterate):
+            yield arg
+            continue
 
         try:
             arg_iter = iter(arg)

@@ -9,7 +9,7 @@ from xloop import xloop, DEFAULT_NOT_ITERATE
         (1, None, [1]),
         ("abc", ["def", "ghi"], ["abc", "def", "ghi"]),
         ([1, None, "abc"], [2, 3, [4]], [1, "abc", 2, 3, [4]]),
-        (None, {"a": 1}, ["a"]),
+        (None, {"a": 1}, [{"a": 1}]),
         ([b"123", "234", 345], None, [b"123", "234", 345]),
         (None, None, [])
     ],
@@ -29,8 +29,8 @@ def test_none():
 @pytest.mark.parametrize(
     "param1, param2, expected",
     [
-        (1, {"abc": 123, "def": [4, 5, 6]}, [1, "abc", "def"]),
-        ({1: 3}, {"abc": 123, None: "none", "def": 4}, [1, "abc", "def"]),
+        (1, {"abc": 123, "def": [4, 5, 6]}, [1, {"abc": 123, "def": [4, 5, 6]}]),
+        ({1: 3}, {"abc": 123, None: "none", "def": 4}, [{1: 3}, {"abc": 123, None: "none", "def": 4}]),  # noqa
     ],
 )
 def test_loop_w_dict(param1, param2, expected):
